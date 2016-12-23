@@ -1,0 +1,22 @@
+{
+  "name": "serverless-janken",
+  "version": "1.0.0",
+  "description": "Janken API using serverless framework",
+  "main": "handler.js",
+  "repository": "https://github.com/noralife/serverless-janken",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "serverless"
+  ],
+  "author": "Tatsuya Nanjo <noralife@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.7.19"
+  },
+  "devDependencies": {
+    "serverless-dynamodb-local": "^0.2.17",
+    "serverless-offline": "^3.6.0"
+  }
+}

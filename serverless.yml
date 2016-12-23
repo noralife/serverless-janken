@@ -1,0 +1,64 @@
+service: serverless-janken
+
+custom:
+  dynamodb:
+    start:
+      port: 8000
+      inMemory: true
+      migration: true
+    migration:
+        dir: ./migrations
+
+plugins:
+  - serverless-dynamodb-local
+  - serverless-offline
+
+package:
+  exclude:
+    - node_modules/**
+    - migrations/**
+    - .git/**
+
+provider:
+  name: aws
+  runtime: nodejs4.3
+  iamRoleStatements:
+    -  Effect: 'Allow'
+       Action:
+         - 'dynamodb:PutItem'
+         - 'dynamodb:Scan'
+       Resource: '*'
+
+functions:
+  playJanken:
+    handler: handler.playJanken
+    events:
+      - http:
+          path: jankens
+          method: post
+  listJankens:
+    handler: handler.listJankens
+    events:
+      - http:
+          path: jankens
+          method: get
+
+resources:
+  Resources:
+    JankensTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: jankens
+        KeySchema:
+          - AttributeName: player
+            KeyType: HASH
+          - AttributeName: unixtime
+            KeyType: RANGE
+        AttributeDefinitions:
+          - AttributeName: player
+            AttributeType: S
+          - AttributeName: unixtime
+            AttributeType: N
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
