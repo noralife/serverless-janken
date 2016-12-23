@@ -14,12 +14,23 @@ You can run serverless-janken in local environment using [serverless-offline](ht
 $ npm install
 $ sls dynamodb install
 $ sls dynamodb start
-$ # Open new shell
+
+# Open new shell
 $ sls offline
+
+# Open new shell
+$ curl 'http://localhost:3000/jankens?hand=rock&name=test' -X POST
+{"player":"rock","computer":"scissors","unixtime":1482469235,"judge":"win"}
+$ curl 'http://localhost:3000/jankens'
+{"jankens":[{"unixtime":1482469235,"player_hand":"rock","judge":"win","player":"test","computer_hand":"scissors"},{"unixtime":1482418800,"player_hand":"rock","judge":"lose","player":"user1","computer_hand":"paper"}]}
 ```
 
 ## Deploy
 
 ```
 $ sls deploy
+$ curl '[endpoint]/jankens?hand=rock&name=test' -X POST
+{"player":"rock","computer":"scissors","unixtime":1482469235,"judge":"win"}
+$ curl '[endpoint]/jankens'
+{"jankens":[{"unixtime":1482469235,"player_hand":"rock","judge":"win","player":"test","computer_hand":"scissors"},{"unixtime":1482418800,"player_hand":"rock","judge":"lose","player":"user1","computer_hand":"paper"}]}
 ```
